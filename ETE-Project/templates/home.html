@@ -1,22 +1,186 @@
+<!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FWI Prediction Form</title>
+  <style>
+    :root {
+      --bg-1: #f5efe6;
+      --bg-2: #dde8cf;
+      --card: #ffffff;
+      --text: #1f2a1f;
+      --muted: #4d5e4d;
+      --primary: #2f6f3e;
+      --primary-hover: #255a32;
+      --border: #d6e2d3;
+      --shadow: 0 14px 36px rgba(31, 42, 31, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(130deg, var(--bg-1), var(--bg-2));
+      color: var(--text);
+      padding: 24px;
+      display: grid;
+      place-items: center;
+    }
+
+    .container {
+      width: min(980px, 100%);
+      background: var(--card);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 34px;
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .back-link {
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    label {
+      font-size: 0.92rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 12px;
+      font-size: 0.98rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus {
+      border-color: #87b894;
+      box-shadow: 0 0 0 4px rgba(47, 111, 62, 0.1);
+    }
+
+    .btn {
+      margin-top: 22px;
+      border: none;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 13px 24px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+
+    .result-box {
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 12px;
+      background: #edf6ef;
+      border: 1px solid #cfe2d3;
+      font-weight: 600;
+    }
+  </style>
+</head>
 <body>
-  <div class = 'login'>
-    <h1>FWI Prediction</h1>
-    <form action = "{{url_for('predict_datapoint')}}" method = "post">          
-      <input type = "text" name = "Temperature" placeholder = "Temperature" required /><br><br>
-      <input type = "text" name = "RH" placeholder = "RH" required /><br><br>
-        <input type = "text" name = "Ws" placeholder = "Ws" required /><br><br>
-        <input type = "text" name = "Rain" placeholder = "Rain" required /><br><br>
-        <input type = "text" name = "FFMC" placeholder = "FFMC" required /><br><br>
-        <input type = "text" name = "DMC" placeholder = "DMC" required /><br><br>
-        <input type = "text" name = "ISI" placeholder = "ISI" required /><br><br>
-        <input type = "text" name = "Classes" placeholder = "Classes" required /><br><br>
-        <input type = "text" name = "Region" placeholder = "Region" required /><br><br>
+  <main class="container">
+    <div class="top-row">
+      <h1>FWI Prediction Form</h1>
+      <a class="back-link" href="{{ url_for('index') }}">Back to Home</a>
+    </div>
+    <p class="subtitle">Enter all required weather and region values to predict the Fire Weather Index.</p>
 
+    <form action="{{ url_for('predict_datapoint') }}" method="post">
+      <div class="form-grid">
+        <div class="field">
+          <label for="Temperature">Temperature</label>
+          <input id="Temperature" type="number" step="any" name="Temperature" placeholder="Temperature" required />
+        </div>
+        <div class="field">
+          <label for="RH">RH</label>
+          <input id="RH" type="number" step="any" name="RH" placeholder="RH" required />
+        </div>
+        <div class="field">
+          <label for="Ws">Ws</label>
+          <input id="Ws" type="number" step="any" name="Ws" placeholder="Ws" required />
+        </div>
+        <div class="field">
+          <label for="Rain">Rain</label>
+          <input id="Rain" type="number" step="any" name="Rain" placeholder="Rain" required />
+        </div>
+        <div class="field">
+          <label for="FFMC">FFMC</label>
+          <input id="FFMC" type="number" step="any" name="FFMC" placeholder="FFMC" required />
+        </div>
+        <div class="field">
+          <label for="DMC">DMC</label>
+          <input id="DMC" type="number" step="any" name="DMC" placeholder="DMC" required />
+        </div>
+        <div class="field">
+          <label for="ISI">ISI</label>
+          <input id="ISI" type="number" step="any" name="ISI" placeholder="ISI" required />
+        </div>
+        <div class="field">
+          <label for="Classes">Classes</label>
+          <input id="Classes" type="number" step="any" name="Classes" placeholder="Classes" required />
+        </div>
+        <div class="field">
+          <label for="Region">Region</label>
+          <input id="Region" type="number" step="any" name="Region" placeholder="Region" required />
+        </div>
+      </div>
 
-        <button type = "submit" class = "btn btn-primary btn-block btn-large" />Predict </button>
+      <button type="submit" class="btn">Predict FWI</button>
     </form>
-    <h2>The FWI prediction is {{result}}</h2>
-  </div>  
+
+    {% if result is defined %}
+      <div class="result-box">The FWI prediction is {{ result }}</div>
+    {% endif %}
+  </main>
 </body>
 </html>
